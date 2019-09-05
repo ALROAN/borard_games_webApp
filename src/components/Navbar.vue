@@ -1,17 +1,17 @@
 <template>
-  <v-card height="200px">
+  <v-card>
     <v-bottom-nav :active.sync="bottomNav" :color="color" :value="true" absolute dark shift>
-      <v-btn dark to="./">
+      <v-btn dark to="/">
         <span>Home</span>
         <v-icon>home</v-icon>
       </v-btn>
 
-      <v-btn dark to="./search">
+      <v-btn dark to="/search">
         <span>Search</span>
         <v-icon>search</v-icon>
       </v-btn>
 
-      <v-btn dark to="./chat">
+      <v-btn dark to="/chat">
         <span>Chat</span>
         <v-icon>forum</v-icon>
       </v-btn>

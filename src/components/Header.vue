@@ -1,9 +1,9 @@
 <template>
-  <v-container class="headerApp">
-    <v-layout class="justify-center align-center fill-height">
-      <p class="display-1 white--text text align center">Board Games</p>
+  <div>
+    <v-layout class="justify-center align-center fill-height headerApp">
+      <p class="display-1 white--text text-md-center mt-3">Board Games</p>
     </v-layout>
-  </v-container>
+  </div>
 </template>
 
 <script>

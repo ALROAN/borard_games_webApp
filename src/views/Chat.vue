@@ -1,9 +1,28 @@
 <template>
   <div>
-    <v-container class="chat h-100">
-      <div id="posts" ref="posts" class="box mt-2" clear-icon>Loading posts...</div>
+    <div class="chat h-100">
+      <v-layout
+        id="posts"
+        ref="posts"
+        class="mt-2"
+        v-for="(mensajeCompleto,i) in mensajes"
+        :key="i"
+      >
+        <v-flex xs8>
+          <v-card>
+            <v-card-text>
+              <p class="text-md-center grey--text">
+                {{mensajeCompleto.nombre}}
+                <v-spacer></v-spacer>
+                {{objetoEnviable.date}}
+              </p>
+              <p class="text-md-center mensajeMostrado">{{mensajeCompleto.mensaje}}</p>
+            </v-card-text>
+          </v-card>
+        </v-flex>
+      </v-layout>
 
-      <v-layout class="mb-3 mt-2">
+      <v-layout class="mb-5 mt-2">
         <div class="inputs">
           <input
             id="textInput"
@@ -12,12 +31,13 @@
             type="text"
             placeholder="Write you message..."
             v-on:keyup.13="writeNewPost()"
+            full-width
           />
 
           <v-btn id="create-post" @click="writeNewPost()" class="is-primary">Send</v-btn>
         </div>
       </v-layout>
-    </v-container>
+    </div>
   </div>
 </template>
 
@@ -26,75 +46,63 @@ import firebase from "firebase";
 export default {
   data() {
     return {
-      mensajesFirebase: [],
+      mensajes: [],
       objetoEnviable: {
+        date: null,
         mensaje: "",
         nombre: ""
       }
     };
   },
   methods: {
-    // change() {
-    //   this.$store.commit("setUser", this.user);
-    // },
-
-    // autoScroll() {
-    //   getElementById("create-post").scrollIntoView(false);
-    // },
+    autoScroll() {
+      that.scrollToEnd();
+    },
 
     writeNewPost() {
+      // agafa el nom de database i el pasa a objetoenviable per a que el pugui pintar.
       this.objetoEnviable.nombre = firebase.auth().currentUser.displayName;
-
+      console.log(this.mensajes);
+      // push fa que quan es pugi la info a database sescrigui en un nou apartat amb una id unica
       firebase
         .database()
         .ref("board-games-app")
         .push(this.objetoEnviable);
+      this.objetoEnviable.mensaje = "";
+      this.objetoEnviable.date = new Date()
+        .toJSON()
+        .slice(0, 10)
+        .replace(/-/g, "/");
     },
-
     getPosts() {
       let that = this;
       // .on = es un listener. quan hi ha un value executa aquesta funció
+      // retorna un array amb el valor del database de firebase
       firebase
         .database()
         .ref("board-games-app")
-        .on("value", function(data) {
-          let mensajes = Object.values(data.val());
-          for (let i = 0; i < mensajes.length; i++) {
-            let nombre = document.createElement("v-layout");
-            let texto = document.createElement("v-layout");
-            let mensajeCompleto = document.createElement("div");
-            nombre.classList.add("nameUser");
-            texto.classList.add("textSend");
-            mensajeCompleto.classList.add("raw");
-            // texto.classList.add("");
-            mensajeCompleto.classList.add("mensajeCompleto");
-            texto.innerHTML = mensajes[i].mensaje;
-            nombre.innerHTML = mensajes[i].nombre;
-            mensajeCompleto.append(nombre, texto);
-            document.getElementById("posts").append(mensajeCompleto);
-          }
+        .on("value", data => {
+          that.mensajes = Object.values(data.val());
+          this.objetoEnviable.date = new Date()
+            .toJSON()
+            .slice(0, 10)
+            .replace(/-/g, "/");
         });
     }
   },
   created() {
     this.getPosts();
-  }
+  },
+  computed: {}
 };
 </script>
 
 <style scoped>
-.mensajeCompleto {
-  /* margin-top: auto;
-  margin-bottom: auto;
-  margin-left: 10px; */
-  border-radius: 25px;
-  background-color: #82ccdd;
-  color: red;
-  /* padding: 10px;
-  position: relative; */
+.chat {
+  height: auto;
+  overflow-y: scroll;
 }
-.textSend {
-}
-.inputs {
+.mensajeMostrado {
+  word-break: break-all;
 }
 </style>

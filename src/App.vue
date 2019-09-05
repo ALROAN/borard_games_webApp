@@ -1,11 +1,10 @@
 <template>
-  <v-app>
+  <v-app class="viewApp">
     <headerApp></headerApp>
-    <v-spacer></v-spacer>
 
     <router-view class="routerStyle" />
 
-    <navbar></navbar>
+    <navbar class="navbar"></navbar>
   </v-app>
 </template>
 
@@ -26,4 +25,11 @@ export default {
 
 
 <style>
+.navbar {
+  position: fixed;
+  bottom: 0;
+}
+.viewApp {
+  background-color: coral;
+}
 </style>
