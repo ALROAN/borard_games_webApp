@@ -27,3 +27,9 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
+// deploy to netlify
+// target blanck guardar components en el store
+// chat autoscroll, mensaje, login no entrar
+// collapse search
+// media query pantalla lateral
+// 100 vh
