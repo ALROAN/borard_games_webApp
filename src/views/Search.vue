@@ -1,6 +1,6 @@
 <template>
   <v-container grid-list-xs class="searchPage">
-    <v-expansion-panel>
+    <v-expansion-panel v-model="panel">
       <v-expansion-panel-content class="grey lighten-3">
         <template v-slot:header>
           <div>FILTERS</div>
@@ -118,7 +118,7 @@
             </v-layout>
 
             <!-- -------------------------------------BUTTON SEARCH------------------------------- -->
-            <v-btn class v-on:click="cargarGames()">Search</v-btn>
+            <v-btn class v-on:click="cargarGames(),collapseSearch()">Search</v-btn>
           </v-container>
         </v-card>
       </v-expansion-panel-content>
@@ -141,17 +141,17 @@
     <!-- ----------------------------------ORDER ITEMS---------------------------------------------- -->
     <div class>
       <v-container grid-list-xs>
-        <v-layout row wrap v-for="(game,index) in allGames" :key="index" class="infoGame">
+        <v-layout
+          row
+          wrap
+          v-for="(game,index) in $store.state.allGames"
+          :key="index"
+          class="infoGame"
+        >
           <router-link :to="'/GameInfo/'+ game.id" class="router">
             <gameInfo :gameInfo="game"></gameInfo>
           </router-link>
         </v-layout>
-        <v-layout row wrap>
-          <p>No games</p>
-        </v-layout>
-      </v-container>
-      <v-container grid-list-xs v-if="allGames.lenght = 0">
-        <p>No games finded</p>
       </v-container>
 
       <!-- paginacio -->
@@ -188,6 +188,7 @@ export default {
 
   data() {
     return {
+      panel: true,
       filterName: "",
       SelectedAge: "",
       optionsAge: [
@@ -241,7 +242,6 @@ export default {
         { value: "999", text: "Max." }
       ],
 
-      allGames: [],
       categoriesList: [],
       categoria: [],
       mechanicsList: [],
@@ -258,6 +258,9 @@ export default {
     };
   },
   methods: {
+    collapseSearch() {
+      this.panel = true;
+    },
     changeOrder(order) {
       this.order = order;
       this.cargarGames();
@@ -292,7 +295,7 @@ export default {
           }
         })
         .then(resp => {
-          this.allGames = resp.data.games;
+          this.$store.state.allGames = resp.data.games;
         })
         .catch(err => console.log(err));
     },
