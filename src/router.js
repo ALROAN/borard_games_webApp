@@ -23,7 +23,14 @@ export default new Router({
       path: "/chat",
       name: "chat",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Chat.vue")
+        import(/* webpackChunkName: "about" */ "./views/Chat.vue"),
+      props: true
+      // meta: { requiresAuth: true },
+      // beforeEnter: (to, from, next) => {
+      //   if (to.meta.requiresAuth) {
+      //     next();
+      //   }
+      // }
     },
     {
       path: "/GameInfo/:id",

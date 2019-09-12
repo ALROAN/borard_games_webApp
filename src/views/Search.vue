@@ -1,161 +1,177 @@
 <template>
-  <div pb-5>
-    <!-- ----------------------buscadors--------------------------------- -->
-    <div>
-      <div>
-        <div slot="header">SEARCH</div>
+  <v-container grid-list-xs class="searchPage">
+    <v-expansion-panel>
+      <v-expansion-panel-content class="grey lighten-3">
+        <template v-slot:header>
+          <div>FILTERS</div>
+        </template>
+        <v-card>
+          <!-- ----------------------buscadors--------------------------------- -->
 
-        <div id="collapseSearchDiv">
-          <!-- -------------------------------AGES-------------------------------- -->
-          <div class="row">
-            <div class="pr-2 col">
-              <p>Ages:</p>
-            </div>
-            <div class="col">
-              <v-select
-                v-model="SelectedAge"
-                @change="filterAges"
-                id="ageFilter"
-                item-text="text"
-                item-value="value"
-                :items="optionsAge"
-              ></v-select>
-            </div>
-          </div>
-          <!-- ------------------------CATEGORIES------------------------------ -->
-          <div class="row">
-            <div class="pr-2 col">
-              <p>Categories:</p>
-            </div>
-            <div class="col">
-              <v-select
-                v-if="categoriesList"
-                v-model="categoria"
-                id="categoriesFilter"
-                item-text="name"
-                item-value="id"
-                :items="categoriesList"
-              ></v-select>
-            </div>
-          </div>
-          <!-- -----------------------------------MECHANICS------------------ -->
-          <div class="row">
-            <div class="pr-2 col">
-              <p>Mechanics:</p>
-            </div>
-            <div class="col">
-              <v-select
-                v-if="mechanicsList"
-                v-model="mechanics"
-                id="mechanicsFilter"
-                item-text="name"
-                item-value="id"
-                :items="mechanicsList"
-              ></v-select>
-            </div>
-          </div>
-          <!-- ---------------------------------PLAYERS----------------------------- -->
-          <div class="row">
-            <div class="col">
-              <p>Players:</p>
-            </div>
-            <div class="col">
-              <v-select
-                v-model="minPlayer"
-                id="minimumPlayers"
-                item-text="text"
-                item-value="value"
-                :items="optionsMinPlayer"
-              ></v-select>
-            </div>
+          <v-container grid-list-xs>
+            <!-- -------------------------------AGES-------------------------------- -->
+            <v-layout row nowrap align-center justify-center fill-height>
+              <v-flex class="pr-2 col">
+                <p>Ages:</p>
+              </v-flex>
+              <v-flex>
+                <v-select
+                  clearable
+                  v-model="SelectedAge"
+                  @change="filterAges"
+                  id="ageFilter"
+                  item-text="text"
+                  item-value="value"
+                  :items="optionsAge"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+            <!-- ------------------------CATEGORIES------------------------------ -->
+            <v-layout row nowrap align-center justify-center fill-height>
+              <v-flex class="pr-2 col">
+                <p>Categories:</p>
+              </v-flex>
+              <v-flex>
+                <v-select
+                  clearable
+                  v-if="categoriesList"
+                  v-model="categoria"
+                  id="categoriesFilter"
+                  item-text="name"
+                  item-value="id"
+                  :items="categoriesList"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+            <!-- -----------------------------------MECHANICS------------------ -->
+            <v-layout row nowrap align-center justify-center fill-height>
+              <v-flex class="pr-2 col">
+                <p>Mechanics:</p>
+              </v-flex>
+              <v-flex>
+                <v-select
+                  clearable
+                  v-if="mechanicsList"
+                  v-model="mechanics"
+                  id="mechanicsFilter"
+                  item-text="name"
+                  item-value="id"
+                  :items="mechanicsList"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+            <!-- ---------------------------------PLAYERS----------------------------- -->
+            <v-layout row nowrap align-center justify-center fill-height>
+              <v-flex>
+                <p>Players:</p>
+              </v-flex>
+              <v-flex>
+                <v-select
+                  clearable
+                  v-model="minPlayer"
+                  id="minimumPlayers"
+                  item-text="text"
+                  item-value="value"
+                  :items="optionsMinPlayer"
+                ></v-select>
+              </v-flex>
 
-            <div class="col">
-              <v-select
-                v-model="maxPlayer"
-                id="maximumPlayers"
-                item-text="text"
-                item-value="value"
-                :items="optionMaxPlayer"
-              ></v-select>
-            </div>
-          </div>
-          <!-- ---------------------------------PLAYTIME----------------------------- -->
-          <div class="row">
-            <div class="col">
-              <p>Playtime:</p>
-            </div>
-            <div class="col">
-              <div>
-                <div class="col">
-                  <p>Min.</p>
-                  <v-select
-                    v-model="minPlaytime"
-                    id="minimumPlaytime"
-                    item-text="text"
-                    item-value="value"
-                    :items="optionPlayTime"
-                  ></v-select>
-                </div>
-              </div>
-            </div>
-            <div class="col">
-              <div>
-                <p>Max.</p>
+              <v-flex>
+                <v-select
+                  clearable
+                  v-model="maxPlayer"
+                  id="maximumPlayers"
+                  item-text="text"
+                  item-value="value"
+                  :items="optionMaxPlayer"
+                ></v-select>
+              </v-flex>
+            </v-layout>
+            <!-- ---------------------------------PLAYTIME----------------------------- -->
+            <v-layout row nowrap align-center justify-center fill-height>
+              <v-flex>
+                <v-icon>timer</v-icon>
+              </v-flex>
+              <v-flex>
+                <p>-</p>
+                <v-select
+                  clearable
+                  v-model="minPlaytime"
+                  id="minimumPlaytime"
+                  item-text="text"
+                  item-value="value"
+                  :items="optionPlayTime"
+                ></v-select>
+              </v-flex>
+              <v-flex>
+                <p>+</p>
 
                 <v-select
+                  clearable
                   v-model="maxPlaytime"
                   id="maximumPlaytime"
                   item-text="text"
                   item-value="value"
                   :items="optionPlayTime"
                 ></v-select>
-              </div>
-            </div>
-          </div>
+              </v-flex>
+            </v-layout>
 
-          <!-- -------------------------------------BUTTON SEARCH------------------------------- -->
-          <v-btn class v-on:click="cargarGames()">Search</v-btn>
-        </div>
-        <div class="row justify-content-center">
-          <p class="col-2">
-            <i class="arrow up"></i>
-          </p>
-          <v-btn
-            class="col-6"
-            data-toggle="collapse"
-            data-target="#collapseSearchDiv"
-            aria-expanded="true"
-            aria-controls="collapseSearchDiv"
-          >Search</v-btn>
-          <p class="col-2">hola</p>
-        </div>
-      </div>
-    </div>
+            <!-- -------------------------------------BUTTON SEARCH------------------------------- -->
+            <v-btn class v-on:click="cargarGames()">Search</v-btn>
+          </v-container>
+        </v-card>
+      </v-expansion-panel-content>
+    </v-expansion-panel>
+
+    <v-layout>
+      <v-text-field
+        clearable
+        @keyup="cargarGames()"
+        prepend-icon="search"
+        single-line
+        v-model="filterName"
+      ></v-text-field>
+    </v-layout>
+    <v-divider></v-divider>
     <!-- --------------------------RESULTS GAMES SEARCH----------------------------------------- -->
+
+    <v-btn v-model="order" @click="changeOrder('popularity')">Popularity</v-btn>
+
+    <!-- ----------------------------------ORDER ITEMS---------------------------------------------- -->
     <div class>
-      <div class="container">
-        <div v-for="(game,index) in allGames" :key="index" class="infoGame">
+      <v-container grid-list-xs>
+        <v-layout row wrap v-for="(game,index) in allGames" :key="index" class="infoGame">
           <router-link :to="'/GameInfo/'+ game.id" class="router">
             <gameInfo :gameInfo="game"></gameInfo>
           </router-link>
-        </div>
-      </div>
+        </v-layout>
+        <v-layout row wrap>
+          <p>No games</p>
+        </v-layout>
+      </v-container>
+      <v-container grid-list-xs v-if="allGames.lenght = 0">
+        <p>No games finded</p>
+      </v-container>
 
       <!-- paginacio -->
-      <div class="d-flex justify-content-center skipDiv">
-        <nav aria-label="Page navigation example container">
-          <ul class="pagination">
-            <li class="page-item skipGames">
-              <a class="page-link" href="#" @click="previousGames(10)">Previous</a>
-            </li>
-            <li class="page-item skipGames">
-              <a class="page-link" href="#" @click="nextGames(10)">Next</a>
-            </li>
-          </ul>
-        </nav>
-      </div>
+
+      <v-layout
+        align-center
+        justify-center
+        fill-height
+        aria-label="Page navigation example container"
+      >
+        <v-btn class="page-item skipGames" @click="previousGames(10)">
+          <v-icon dark left>keyboard_arrow_left</v-icon>less
+        </v-btn>
+        <v-btn class="page-item skipGames" @click="nextGames(10)">
+          more
+          <v-icon content-class="border" dark right>keyboard_arrow_right</v-icon>
+        </v-btn>
+      </v-layout>
     </div>
-  </div>
+  </v-container>
   <!-- ---------------------------------------->
 </template>
 
@@ -172,9 +188,9 @@ export default {
 
   data() {
     return {
+      filterName: "",
       SelectedAge: "",
       optionsAge: [
-        { value: "null", text: "-" },
         { value: "3", text: "0-3" },
         { value: "8", text: "4-8" },
         { value: "13", text: "9-13" },
@@ -182,7 +198,7 @@ export default {
         { value: "99", text: "+18" }
       ],
       optionsMinPlayer: [
-        { value: "0", text: "1" },
+        { value: "0", text: "Min." },
         { value: "1", text: "2" },
         { value: "2", text: "3" },
         { value: "3", text: "4" },
@@ -196,7 +212,6 @@ export default {
         { value: "11", text: "12" }
       ],
       optionMaxPlayer: [
-        { value: "999", text: "Max." },
         { value: "2", text: "1 " },
         { value: "3", text: "2" },
         { value: "4", text: "3" },
@@ -210,19 +225,20 @@ export default {
         { value: "21", text: "20 " },
         { value: "31", text: "30" },
         { value: "41", text: "40 " },
-        { value: "51", text: "50 " }
+        { value: "51", text: "50 " },
+        { value: "999", text: "Max." }
       ],
       optionPlayTime: [
         { value: "0", text: "Min." },
-        { value: "10", text: "10min" },
-        { value: "20", text: "20min" },
-        { value: "30", text: "30min" },
-        { value: "40", text: "40min" },
+        { value: "10", text: "10m" },
+        { value: "20", text: "20m" },
+        { value: "30", text: "30m" },
+        { value: "40", text: "40m" },
         { value: "50", text: "50m" },
         { value: "60", text: "1h" },
         { value: "120", text: "2h" },
         { value: "240", text: "4h" },
-        { value: "480", text: "8h" }
+        { value: "999", text: "Max." }
       ],
 
       allGames: [],
@@ -237,21 +253,22 @@ export default {
       minPlaytime: null,
       maxPlayer: null,
       minPlayer: null,
-      skip: 0
+      skip: 0,
+      order: null
     };
   },
   methods: {
+    changeOrder(order) {
+      this.order = order;
+      this.cargarGames();
+    },
     nextGames(x) {
-      if (this.skip >= allGames.lenght) {
-        this.skip = this.skip + x;
-        this.cargarGames();
-      }
+      this.skip = this.skip + x;
+      this.cargarGames();
     },
     previousGames(x) {
-      if (this.skip !== 0) {
-        this.skip = this.skip - x;
-        this.cargarGames();
-      }
+      this.skip = this.skip - x;
+      this.cargarGames();
     },
 
     cargarGames() {
@@ -269,7 +286,9 @@ export default {
             gt_min_playtime: this.minPlaytime,
             lt_max_playtime: this.maxPlaytime,
             gt_min_age: this.MinAge,
-            lt_min_age: this.MaxAge
+            lt_min_age: this.MaxAge,
+            name: this.filterName,
+            order_by: this.order
           }
         })
         .then(resp => {
@@ -297,7 +316,6 @@ export default {
         this.MinAge = 0;
         this.MaxAge = 909;
       }
-      console.log("ages filter");
     },
 
     cargarCategories() {
@@ -307,7 +325,6 @@ export default {
         .then(response => response.json())
         .then(resp => {
           this.categoriesList = resp.categories;
-          console.log(this.categoriesList);
         })
         .catch(err => console.log(err));
     },
@@ -327,6 +344,9 @@ export default {
 </script>
 
 <style scoped>
+a {
+  text-decoration: none;
+}
 i {
   border: solid black;
   border-width: 0 3px 3px 0;
@@ -345,5 +365,12 @@ i {
 }
 .skipGames {
   border-radius: 1rem;
+}
+.searchPage {
+  margin-top: 73px;
+  margin-bottom: 57px;
+
+  overflow-y: scroll;
+  height: vh100;
 }
 </style>

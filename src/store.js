@@ -6,7 +6,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    user: { name: "", email: "" }
+    user: { name: "", email: "", picture: "" }
   },
   getters: {
     // getUserStore(state) {
@@ -24,7 +24,6 @@ export default new Vuex.Store({
 
       // Provider
       var provider = new firebase.auth.GoogleAuthProvider();
-      console.log("login store");
 
       // How to Log In
       firebase
@@ -33,9 +32,11 @@ export default new Vuex.Store({
         .then(userFb => {
           context.state.user.name = userFb.additionalUserInfo.profile.name;
           context.state.user.email = userFb.additionalUserInfo.profile.email;
+          context.state.user.picture =
+            userFb.additionalUserInfo.profile.picture;
         });
 
-      console.log(context.state);
+      console.log(context.state.user);
     },
     logOut(context) {
       firebase
@@ -44,6 +45,7 @@ export default new Vuex.Store({
         .then(function() {
           context.state.user.name = "";
           context.state.user.email = "";
+          context.state.user.picture = "";
 
           console.log("logOut store");
           // Sign-out successful.
