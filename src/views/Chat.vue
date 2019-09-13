@@ -1,6 +1,6 @@
 <template>
   <div class="chat h-100">
-    <v-btn color="success" @load="goTo()">text</v-btn>
+    <v-btn color="success" @click="pageScroll()">text</v-btn>
 
     <v-layout id="posts" ref="posts" class="mt-2" v-for="(mensajeCompleto,i) in mensajes" :key="i">
       <v-flex xs8 class="pl-3">
@@ -53,6 +53,7 @@ export default {
   methods: {
     goTo() {
       window.scrollTo(0, document.body.scrollHeight);
+      console.log("scroll");
     },
     writeNewPost() {
       // agafa el nom de database i el pasa a objetoenviable per a que el pugui pintar.
@@ -78,6 +79,7 @@ export default {
   },
   created() {
     this.getPosts();
+    this.goTo();
   },
   computed: {}
 };
