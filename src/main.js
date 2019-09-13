@@ -30,6 +30,6 @@ firebase.initializeApp(firebaseConfig);
 // deploy to netlify
 // target blanck guardar components en el store
 // chat autoscroll, mensaje, login no entrar
-// collapse search
+// collapse search                                        ok!
 // media query pantalla lateral
-// 100 vh
+// 100 vh                                                  ok!

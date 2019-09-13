@@ -1,5 +1,7 @@
 <template>
   <div class="chat h-100">
+    <v-btn color="success" @load="goTo()">text</v-btn>
+
     <v-layout id="posts" ref="posts" class="mt-2" v-for="(mensajeCompleto,i) in mensajes" :key="i">
       <v-flex xs8 class="pl-3">
         <v-layout row wrap>
@@ -49,6 +51,9 @@ export default {
     };
   },
   methods: {
+    goTo() {
+      window.scrollTo(0, document.body.scrollHeight);
+    },
     writeNewPost() {
       // agafa el nom de database i el pasa a objetoenviable per a que el pugui pintar.
       this.objetoEnviable.nombre = firebase.auth().currentUser.displayName;
@@ -94,7 +99,7 @@ export default {
 }
 .messageFromOthers {
   background-color: plum;
-  justify-content: end;
+  right: 0;
 }
 .messages {
   border-radius: 25px;
