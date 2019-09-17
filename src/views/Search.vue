@@ -5,7 +5,7 @@
         <template v-slot:header>
           <div>FILTERS</div>
         </template>
-        <v-card>
+        <v-card >
           <!-- ----------------------buscadors--------------------------------- -->
 
           <v-container grid-list-xs>
@@ -142,6 +142,7 @@
     <div class>
       <v-container grid-list-xs>
         <v-layout
+        mb-4
           row
           wrap
           v-for="(game,index) in $store.state.allGames"
@@ -188,7 +189,7 @@ export default {
 
   data() {
     return {
-      panel: true,
+      panel: [true],
       filterName: "",
       SelectedAge: "",
       optionsAge: [
@@ -259,7 +260,7 @@ export default {
   },
   methods: {
     collapseSearch() {
-      this.panel = true;
+      this.panel = false;
     },
     changeOrder(order) {
       this.order = order;
@@ -296,6 +297,8 @@ export default {
         })
         .then(resp => {
           this.$store.state.allGames = resp.data.games;
+          console.log(this.$store.state.allGames);
+          
         })
         .catch(err => console.log(err));
     },

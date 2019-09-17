@@ -2,7 +2,7 @@
   <div grid-list-xs v-if="gameInfo">
     <v-layout>
       <v-card>
-        <v-img @load="getRating()" :src="gameInfo.images.small" aspect-ratio="1" conyain></v-img>
+        <v-img @load="getRating()" :src="gameInfo.images.large" aspect-ratio="1" conyain></v-img>
 
         <v-card-title primary-title>
           <div>

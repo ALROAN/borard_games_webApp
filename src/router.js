@@ -1,8 +1,11 @@
 import Vue from "vue";
 import Router from "vue-router";
 import Home from "./views/Home.vue";
+import store from './store'
 
 Vue.use(Router);
+
+
 
 export default new Router({
   mode: "history",
@@ -16,21 +19,23 @@ export default new Router({
     {
       path: "/search",
       name: "search",
-      component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Search.vue")
-    },
+      component: () => import( "./views/Search.vue") },
     {
       path: "/chat",
       name: "chat",
       component: () =>
-        import(/* webpackChunkName: "about" */ "./views/Chat.vue"),
-      props: true
-      // meta: { requiresAuth: true },
-      // beforeEnter: (to, from, next) => {
-      //   if (to.meta.requiresAuth) {
-      //     next();
-      //   }
-      // }
+        import( "./views/Chat.vue"),
+      beforeEnter:( (to, from, next) => {
+        console.log(to,from);
+        if (store.state.user.name) { 
+           next() 
+        } else {
+          window.alert("You need to be logged to enter in to this page.") ;
+        }
+         
+        
+        })
+        
     },
     {
       path: "/GameInfo/:id",
@@ -40,3 +45,5 @@ export default new Router({
     }
   ]
 });
+
+

@@ -1,16 +1,15 @@
 <template>
-  <div class="chat h-100">
-    <v-btn color="success" @click="pageScroll()">text</v-btn>
-
-    <v-layout id="posts" ref="posts" class="mt-2" v-for="(mensajeCompleto,i) in mensajes" :key="i">
-      <v-flex xs8 class="pl-3">
-        <v-layout row wrap>
+  <div class="chat h-100" >
+    <div class="messages"  v-chat-scroll>
+    <v-layout    id="posts" ref="posts" class="mt-2 messages" v-for="(mensajeCompleto,i) in mensajes" :key="i">
+      <v-flex xs8 class="pl-3 ">
+        <v-layout row wrap >
           <!-- :class: son clases con condicionales -->
           <!-- aquí se cargan los mensajes del chat,  -->
           <v-card
             class="messages"
             :class=" {'myMessages': ($store.state.user.name == mensajeCompleto.nombre),
-           'messageFromOthers': ($store.state.user.name != mensajeCompleto.nombre) } "
+           'messageFromOthers': ($store.state.user.name != mensajeCompleto.nombre)}"
           >
             <v-card-text>
               <p class="text-md-center black--text">{{mensajeCompleto.nombre}}</p>
@@ -18,10 +17,12 @@
             </v-card-text>
           </v-card>
         </v-layout>
+
       </v-flex>
     </v-layout>
+    </div>
 
-    <v-layout row nowrap class="mt-2">
+    <v-layout  row nowrap class="mt-2">
       <v-textarea
         id="textInput"
         class="input messageBox"
@@ -40,6 +41,7 @@
 
 <script>
 import firebase from "firebase";
+
 export default {
   data() {
     return {
@@ -51,10 +53,6 @@ export default {
     };
   },
   methods: {
-    goTo() {
-      window.scrollTo(0, document.body.scrollHeight);
-      console.log("scroll");
-    },
     writeNewPost() {
       // agafa el nom de database i el pasa a objetoenviable per a que el pugui pintar.
       this.objetoEnviable.nombre = firebase.auth().currentUser.displayName;
@@ -64,6 +62,7 @@ export default {
         .ref("board-games-app")
         .push(this.objetoEnviable);
       this.objetoEnviable.mensaje = "";
+
     },
     getPosts() {
       let that = this;
@@ -79,18 +78,23 @@ export default {
   },
   created() {
     this.getPosts();
-    this.goTo();
   },
+  mounted() {
+		},
+	updated() {
+			
+		},
   computed: {}
 };
 </script>
 
 <style scoped>
 .chat {
+  background: lightgrey;
   margin-top: 73px;
   margin-bottom: 57px;
-
-  overflow-y: scroll;
+width: vh100;
+  	overflow: scroll;
   height: vh100;
 }
 .mensajeMostrado {

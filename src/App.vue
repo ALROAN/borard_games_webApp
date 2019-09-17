@@ -3,6 +3,7 @@
   contener un div que englobe todo el contenido-->
   <!-- v-app es imprescindible para poner dentro todo lo que queramos hacer servir con  vuetify -->
   <v-app class="viewApp">
+    <v-content>
     <!-- v-layout es un div que contiene la clase flex predefinida -->
     <v-layout row wrap>
       <!-- importamos el componente headerApp  -->
@@ -15,6 +16,7 @@
       <!-- importamos el componente navbar -->
       <navbar class="navbar"></navbar>
     </v-layout>
+    </v-content>
   </v-app>
 </template>
 
@@ -32,10 +34,6 @@ export default {
   // las computed se usan para modificar variables sin tener que llamarlas.
   // Se llamaran automáticamente  cada vez que cambie la info de base.
   computed: {
-    getUser() {
-      // las computed necesitan un return
-      return this.$store.state.user;
-    }
   }
 };
 </script>

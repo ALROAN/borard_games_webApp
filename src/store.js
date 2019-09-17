@@ -2,6 +2,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import firebase from "firebase";
 
+// import store from './store.js'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -60,3 +62,4 @@ export default new Vuex.Store({
 
 // html - $store.state.userStore
 // js - this.$store.state.usertore
+
