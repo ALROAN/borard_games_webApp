@@ -1,28 +1,33 @@
 <template>
-  <div class="chat h-100" >
-    <div class="messages"  v-chat-scroll>
-    <v-layout    id="posts" ref="posts" class="mt-2 messages" v-for="(mensajeCompleto,i) in mensajes" :key="i">
-      <v-flex xs8 class="pl-3 ">
-        <v-layout row wrap >
-          <!-- :class: son clases con condicionales -->
-          <!-- aquí se cargan los mensajes del chat,  -->
-          <v-card
-            class="messages"
-            :class=" {'myMessages': ($store.state.user.name == mensajeCompleto.nombre),
+  <div class="chat h-100">
+    <div class="messages" ref="messages">
+      <v-layout
+        id="posts"
+        ref="posts"
+        class="mt-2 message"
+        v-for="(mensajeCompleto,i) in mensajes"
+        :key="i"
+      >
+        <v-flex xs8 class="pl-3">
+          <v-layout row wrap class="cardLayout">
+            <!-- :class: son clases con condicionales -->
+            <!-- aquí se cargan los mensajes del chat,  -->
+            <v-card
+              class="mensajes"
+              :class=" {'myMessages': ($store.state.user.name == mensajeCompleto.nombre),
            'messageFromOthers': ($store.state.user.name != mensajeCompleto.nombre)}"
-          >
-            <v-card-text>
-              <p class="text-md-center black--text">{{mensajeCompleto.nombre}}</p>
-              <p class="text-md-center mensajeMostrado">{{mensajeCompleto.mensaje}}</p>
-            </v-card-text>
-          </v-card>
-        </v-layout>
-
-      </v-flex>
-    </v-layout>
+            >
+              <v-card-text>
+                <p class="text-md-center black--text">{{mensajeCompleto.nombre}}</p>
+                <p class="text-md-center mensajeMostrado">{{mensajeCompleto.mensaje}}</p>
+              </v-card-text>
+            </v-card>
+          </v-layout>
+        </v-flex>
+      </v-layout>
     </div>
 
-    <v-layout  row nowrap class="mt-2">
+    <v-layout row nowrap class="mt-2 boxToSend">
       <v-textarea
         id="textInput"
         class="input messageBox"
@@ -53,6 +58,9 @@ export default {
     };
   },
   methods: {
+    chatScroll() {
+      this.$refs.messages.scrollTop = this.$refs.messages.scrollHeight;
+    },
     writeNewPost() {
       // agafa el nom de database i el pasa a objetoenviable per a que el pugui pintar.
       this.objetoEnviable.nombre = firebase.auth().currentUser.displayName;
@@ -62,7 +70,6 @@ export default {
         .ref("board-games-app")
         .push(this.objetoEnviable);
       this.objetoEnviable.mensaje = "";
-
     },
     getPosts() {
       let that = this;
@@ -72,6 +79,8 @@ export default {
         .database()
         .ref("board-games-app")
         .on("value", data => {
+          console.log("mes");
+
           that.mensajes = Object.values(data.val());
         });
     }
@@ -79,23 +88,27 @@ export default {
   created() {
     this.getPosts();
   },
-  mounted() {
-		},
-	updated() {
-			
-		},
+  mounted() {},
+  updated() {
+    this.chatScroll();
+  },
+  watch: {
+    mensajes: function(val) {
+      console.log("meses");
+      this.chatScroll();
+    }
+  },
   computed: {}
 };
 </script>
 
 <style scoped>
 .chat {
-  background: lightgrey;
+  background: white;
   margin-top: 73px;
   margin-bottom: 57px;
-width: vh100;
-  	overflow: scroll;
-  height: vh100;
+  width: 100vw;
+  height: 143vw;
 }
 .mensajeMostrado {
   word-break: break-all;
@@ -105,14 +118,30 @@ width: vh100;
 }
 .messageFromOthers {
   background-color: plum;
-  right: 0;
 }
-.messages {
+.mensajes {
   border-radius: 25px;
   width: auto;
   height: auto;
 }
 .messageBox {
   margin-top: 0;
+  height: 58px;
+}
+.messages {
+  overflow: scroll;
+  height: 67vh;
+  margin-bottom: 26px;
+}
+.cardLayout {
+  padding-bottom: 2px;
+}
+.boxToSend {
+  background-color: white;
+  padding-bottom: 8px;
+}
+
+#create-post {
+  margin-top: 11px;
 }
 </style>

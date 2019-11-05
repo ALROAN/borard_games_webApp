@@ -5,7 +5,7 @@
         <template v-slot:header>
           <div>FILTERS</div>
         </template>
-        <v-card >
+        <v-card>
           <!-- ----------------------buscadors--------------------------------- -->
 
           <v-container grid-list-xs>
@@ -136,13 +136,10 @@
     <v-divider></v-divider>
     <!-- --------------------------RESULTS GAMES SEARCH----------------------------------------- -->
 
-    <v-btn v-model="order" @click="changeOrder('popularity')">Popularity</v-btn>
-
-    <!-- ----------------------------------ORDER ITEMS---------------------------------------------- -->
-    <div class>
+    <v-container>
       <v-container grid-list-xs>
         <v-layout
-        mb-4
+          mb-4
           row
           wrap
           v-for="(game,index) in $store.state.allGames"
@@ -154,8 +151,13 @@
           </router-link>
         </v-layout>
       </v-container>
+      <v-layout v-if="$store.state.allGames.length == 0">
+        <v-flex class="align-content-center">
+          <p class="text-xs-center title">Oops...There are no games with these features</p>
+        </v-flex>
+      </v-layout>
 
-      <!-- paginacio -->
+      <!-- paginación -->
 
       <v-layout
         align-center
@@ -164,14 +166,14 @@
         aria-label="Page navigation example container"
       >
         <v-btn class="page-item skipGames" @click="previousGames(10)">
-          <v-icon dark left>keyboard_arrow_left</v-icon>less
+          <v-icon left depressed>keyboard_arrow_left</v-icon>less
         </v-btn>
         <v-btn class="page-item skipGames" @click="nextGames(10)">
           more
-          <v-icon content-class="border" dark right>keyboard_arrow_right</v-icon>
+          <v-icon content-class="border" right>keyboard_arrow_right</v-icon>
         </v-btn>
       </v-layout>
-    </div>
+    </v-container>
   </v-container>
   <!-- ---------------------------------------->
 </template>
@@ -297,8 +299,6 @@ export default {
         })
         .then(resp => {
           this.$store.state.allGames = resp.data.games;
-          console.log(this.$store.state.allGames);
-          
         })
         .catch(err => console.log(err));
     },
@@ -378,5 +378,9 @@ i {
 
   overflow-y: scroll;
   height: vh100;
+}
+
+.v-icon {
+  border: 0px;
 }
 </style>

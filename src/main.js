@@ -5,9 +5,6 @@ import store from "./store";
 import Vuetify from "vuetify";
 import "vuetify/dist/vuetify.min.css";
 import firebase from "firebase";
-import VueChatScroll from 'vue-chat-scroll'
-
-Vue.use(VueChatScroll)
 
 Vue.use(Vuetify);
 
@@ -18,8 +15,6 @@ new Vue({
   store,
   render: h => h(App)
 }).$mount("#app");
-
-
 
 var firebaseConfig = {
   apiKey: "AIzaSyD2vK_xOTjMVqeGjO_1GNbNe9EPCKnvrs0",
@@ -32,10 +27,4 @@ var firebaseConfig = {
 };
 
 firebase.initializeApp(firebaseConfig);
-// deploy to netlify                                      ok!
-// target blanck guardar components en el store           
-// chat autoscroll, mensaje,
-//  login no entrar                                       ok!
-// collapse search                                        ok!
-// media query pantalla lateral                           ok!
-// 100 vh                                                  ok!
+// target blanck guardar components en el store
