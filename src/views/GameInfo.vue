@@ -88,7 +88,6 @@ export default {
           this.getRating();
           this.cargarCategories();
           this.cargarMechanics();
-          console.log(this.infoGame);
         })
         .catch(err => console.log(err));
     },
@@ -103,7 +102,6 @@ export default {
         .then(resp => {
           this.categoriesList = resp.categories;
           this.categoriesGame();
-          console.log(this.categoriesList);
         })
         .catch(err => console.log(err));
     },
@@ -114,7 +112,6 @@ export default {
         .then(response => response.json())
         .then(resp => {
           this.mechanicsList = resp.mechanics;
-          console.log(this.mechanicsList);
         })
         .catch(err => console.log(err));
     }

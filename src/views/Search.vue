@@ -1,5 +1,5 @@
 <template>
-  <v-container grid-list-xs class="searchPage">
+  <v-container grid-list-xs class="searchPage" ref="searchPage">
     <v-expansion-panel v-model="panel">
       <v-expansion-panel-content class="grey lighten-3">
         <template v-slot:header>
@@ -261,6 +261,12 @@ export default {
     };
   },
   methods: {
+    gamesScroll() {
+      console.log("scroll");
+      window.scrollTo(0, 0);
+      // this.$refs.searchPage.scrollTop = this.$refs.searchPage.scrollHeight;
+    },
+
     collapseSearch() {
       this.panel = false;
     },
@@ -299,6 +305,8 @@ export default {
         })
         .then(resp => {
           this.$store.state.allGames = resp.data.games;
+
+          this.gamesScroll();
         })
         .catch(err => console.log(err));
     },
@@ -345,6 +353,11 @@ export default {
         .catch(err => console.log(err));
     }
   },
+  // watch: {
+  //   mechanicsList: function(val) {
+  //     this.gamesScroll();
+  //   }
+  // },
   computed: {}
 };
 </script>
@@ -375,9 +388,6 @@ i {
 .searchPage {
   margin-top: 73px;
   margin-bottom: 57px;
-
-  overflow-y: scroll;
-  height: vh100;
 }
 
 .v-icon {

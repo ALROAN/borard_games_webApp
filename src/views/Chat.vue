@@ -94,7 +94,6 @@ export default {
   },
   watch: {
     mensajes: function(val) {
-      console.log("meses");
       this.chatScroll();
     }
   },
